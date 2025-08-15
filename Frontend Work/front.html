@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Obesity Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 inputs per row */
+            gap: 10px; /* spacing between inputs */
+            max-width: 600px;
+            margin: auto;
+        }
+        /* input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            
+            
+            
+            font-size: 14px;
+        } */
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        select option {
+            color: #000;
+        }
+        .tooltip {
+            position: relative;
+            cursor: help;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            transform: translateY(5px);
+            z-index: 10;
+        }
+        button {
+            width: 200%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background-color: #6a11cb;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2575fc;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        #result {
+            font-weight: bold;
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Obesity Prediction Form</h1>
+        <form id="predictionForm">
+    <label title="Biological sex of the person">Gender:</label>
+    <select name="Gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+
+    <label title="Age in years">Age:</label>
+    <input type="number" name="Age" step="1" min="1" required>
+
+    <label title="Height in meters (e.g., 1.75)">Height (m):</label>
+    <input type="number" name="Height" step="0.01" required>
+
+    <label title="Weight in kilograms (e.g., 70.5)">Weight (kg):</label>
+    <input type="number" name="Weight" step="0.1" required>
+
+    <label title="Whether a family member has had overweight issues">Family History with Overweight:</label>
+    <select name="Family">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="Do you frequently eat high-calorie foods?">FAVC:</label>
+    <select name="FAVC">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="Average number of vegetables consumed per day">FCVC:</label>
+    <input type="number" name="FCVC" step="1" min="0" required>
+
+    <label title="Number of main meals consumed daily">NCP:</label>
+    <input type="number" name="NCP" step="1" min="0" required>
+
+    <label title="Frequency of eating food between meals">CAEC:</label>
+    <select name="CAEC">
+        <option value="Sometimes">Sometimes</option>
+        <option value="Frequently">Frequently</option>
+        <option value="Always">Always</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="Do you smoke?">SMOKE:</label>
+    <select name="SMOKE">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="Average daily water consumption in liters">CH2O:</label>
+    <input type="number" name="CH2O" step="1" min="0" required>
+
+    <label title="Do you monitor your calorie intake?">SCC:</label>
+    <select name="SCC">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="How many hours of physical activity per week">FAF:</label>
+    <input type="number" name="FAF" step="1" min="0" required>
+
+    <label title="Time spent using electronic devices daily (hours)">TUE:</label>
+    <input type="number" name="TUE" step="1" min="0" required>
+
+    <label title="Frequency of alcohol consumption">CALC:</label>
+    <select name="CALC">
+        <option value="Sometimes">Sometimes</option>
+        <option value="Frequently">Frequently</option>
+        <option value="Always">Always</option>
+        <option value="no">No</option>
+    </select>
+
+    <label title="Main mode of transportation">MTRANS:</label>
+    <select name="MTRANS">
+        <option value="PublicTransportation">Public Transportation</option>
+        <option value="Walking">Walking</option>
+        <option value="Automobile">Automobile</option>
+        <option value="Motorbike">Motorbike</option>
+        <option value="Bike">Bike</option>
+    </select>
+
+    <button type="submit">Predict</button>
+</form>
+
+<h2>Prediction: <span id="result">--</span></h2>
+
+    </div>
+
+    <script>
+        const map = {
+            0: 'Insufficient Weight',
+            1: 'Normal Weight',
+            2: 'Obesity Type_I',
+            3: 'Obesity Type_II',
+            4: 'Obesity Type_III',
+            5: 'Overweight Level_I',
+            6: 'Overweight Level_II'
+        };
+
+        document.getElementById('predictionForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            ['Age', 'Height', 'Weight', 'FCVC', 'NCP', 'CH2O', 'FAF', 'TUE'].forEach(key => {
+                data[key] = parseFloat(data[key]);
+            });
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+                const result = await response.json();
+
+                document.getElementById('result').innerText =
+                    typeof result.prediction !== 'undefined'
+                        ? (map[result.prediction] ?? result.prediction)
+                        : 'Unexpected response';
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
